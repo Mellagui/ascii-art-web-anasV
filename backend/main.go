@@ -34,13 +34,14 @@ func init() {
 func main() {
     // Serve static files (CSS)
 	fs := http.FileServer(http.Dir("../static"))
-    http.Handle("/static/", http.StripPrefix("/static/", fs))
+    // http.Handle("/static/", http.StripPrefix("/static/", fs)) i removed this one and replace it by the bellow because i could not find the utility of stripPrefix.
+    http.Handle("/static/", fs)
 
     // Route handlers
     http.HandleFunc("/", handleIndex)
     http.HandleFunc("/generate", handleGenerate)
 
-    log.Println("Server starting on :8080...")
+    log.Println("Server starting on : http://localhost:8080/")
     if err := http.ListenAndServe(":8080", nil); err != nil {
         log.Fatal(err)
     }
