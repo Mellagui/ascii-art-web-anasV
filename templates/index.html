@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">{{.Title}}</h1>
+
+        <div class="generator-box">
+            <form action="/generate" method="post" class="input-group">
+                <textarea name="text" placeholder="Enter your text here">{{.InputText}}</textarea>
+                <select name="style">
+                    <option value="standard" {{if eq .StyleUsed "standard"}}selected{{end}}>Standard</option>
+                    <option value="thinkertoy" {{if eq .StyleUsed "thinkertoy"}}selected{{end}}>Thinkertoy</option>
+                    <option value="shadow" {{if eq .StyleUsed "shadow"}}selected{{end}}>Shadow</option>
+                    <option value="hy" {{if eq .StyleUsed "hy"}}selected{{end}}>hy</option>
+                </select>
+                <button type="submit">Generate</button>
+            </form>
+
+            <div class="result-section">
+                <h2>Your ASCII Art:</h2>
+                <pre id="asciiResult">{{if .Error}}{{.Error}}{{else}}{{.AsciiArt}}{{end}}</pre>
+                {{if .AsciiArt}}
+                <div class="button-group">
+                    <a href="/generate?download=true" download="ascii_art.txt" class="button">Download ASCII Art</a>
+                </div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">&copy; All Rights Reserved to Anass Lazaar</footer>
+</body>
+</html>
