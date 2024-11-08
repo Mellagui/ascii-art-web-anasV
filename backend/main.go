@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -33,18 +34,51 @@ func init() {
 
 func main() {
     // Serve static files (CSS)
-	fs := http.FileServer(http.Dir("../static"))
-    // http.Handle("/static/", http.StripPrefix("/static/", fs)) i removed this one and replace it by the bellow because i could not find the utility of stripPrefix.
-    http.Handle("/static/", fs)
+    http.Handle("/static/", http.StripPrefix("/static", http.HandlerFunc(handleStatic)))
 
     // Route handlers
     http.HandleFunc("/", handleIndex)
     http.HandleFunc("/generate", handleGenerate)
+    http.HandleFunc("/download", handleExport)
 
     log.Println("Server starting on : http://localhost:8080/")
     if err := http.ListenAndServe(":8080", nil); err != nil {
         log.Fatal(err)
     }
+}
+
+func handleStatic(w http.ResponseWriter, r *http.Request) {
+    if r.URL.Path == "/" {
+        http.Error(w, "404- Not Found", 404)
+        return
+    }
+    fs := http.FileServer(http.Dir("../static"))
+	fs.ServeHTTP(w, r)
+}
+
+func handleExport(w http.ResponseWriter, r *http.Request) {
+	fileType := r.FormValue("fileType")
+    asciiArt := r.FormValue("asciiArt")
+	switch fileType {
+	case "txt":
+		w.Header().Set("Content-Disposition", "attachment; filename=asciiArt.txt")
+    	w.Header().Set("Content-Type", "text/plain")
+    	w.Header().Set("Content-Lenght", strconv.Itoa(len(asciiArt)))
+		w.Write([]byte(asciiArt))
+	case "doc":
+		w.Header().Set("Content-Disposition", "attachment; filename=asciiArt.docx")
+    	w.Header().Set("Content-Type", "application/octet-stream")
+    	w.Header().Set("Content-Lenght", strconv.Itoa(len(asciiArt)))
+		w.Write([]byte(asciiArt))
+	case "html":
+		result := "<pre>" + asciiArt + "</pre>"
+		w.Header().Set("Content-Disposition", "attachment; filename=asciiArt.html")
+    	w.Header().Set("Content-Type", "text/html")
+    	w.Header().Set("Content-Lenght", strconv.Itoa(len(result)))
+		w.Write([]byte(result))
+	default :
+		http.Error(w, "404- Not Found", 404)
+	}
 }
 
 func handleIndex(w http.ResponseWriter, r *http.Request) {
@@ -77,7 +111,6 @@ func handleGenerate(w http.ResponseWriter, r *http.Request) {
 
     var sb strings.Builder
     utils.PrintAsciiArt(inputText, bannerMap, "", &sb)
-
     renderTemplate(w, PageData{
         Title:     "ASCII Art Generator",
         AsciiArt:  sb.String(),

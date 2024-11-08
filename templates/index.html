@@ -26,14 +26,23 @@
                 <h2>Your ASCII Art:</h2>
                 <pre id="asciiResult">{{if .Error}}{{.Error}}{{else}}{{.AsciiArt}}{{end}}</pre>
                 {{if .AsciiArt}}
-                <div class="button-group">
-                    <a href="/generate?download=true" download="ascii_art.txt" class="button">Download ASCII Art</a>
-                </div>
+                    <div style="margin-top: 10px; text-align: center; float: right">
+                        <form action="/download" method="post">
+                            <textarea name="asciiArt" hidden>{{.AsciiArt}}</textarea>
+                            <select name="fileType">
+                                <option value="txt" selected>.txt</option>
+                                <option value="doc">.doc</option>
+                                <option value="html">.html</option>
+                            </select>
+                            <button type="submit">Download</button>
+                        </form>
+                    </div>
+                    <br/>
                 {{end}}
             </div>
         </div>
     </div>
 
-    <footer class="footer">&copy; All Rights Reserved to Anass Lazaar</footer>
+    <!-- <footer class="footer">&copy; All Rights Reserved to Anass Lazaar</footer> -->
 </body>
 </html>
