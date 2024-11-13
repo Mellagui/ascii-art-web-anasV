@@ -1,43 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{.Title}}</title>
     <link rel="stylesheet" href="/static/styles.css" />
 </head>
+
 <body>
     <div class="container">
-        <h1 id="title">{{.Title}}</h1>
+        <h1>{{.Title}}</h1>
 
         <div class="generator-box">
-            <form action="/generate" method="post" class="input-group">
-                <textarea name="text" placeholder="Enter your text here">{{.InputText}}</textarea>
+            <form action="/ascii-art" method="post">
+                <div class="input-group">
+                    <textarea name="text" placeholder="Enter your text here" maxlength="2000">{{.InputText}}</textarea>
+                </div>
+                <div class="submitButtons">
                 <select name="style">
-                    <option value="standard" {{if eq .StyleUsed "standard"}}selected{{end}}>Standard</option>
-                    <option value="thinkertoy" {{if eq .StyleUsed "thinkertoy"}}selected{{end}}>Thinkertoy</option>
-                    <option value="shadow" {{if eq .StyleUsed "shadow"}}selected{{end}}>Shadow</option>
-                    <option value="hy" {{if eq .StyleUsed "hy"}}selected{{end}}>hy</option>
-                </select>
-                <button type="submit">Generate</button>
+                        <option value="standard" {{if eq .StyleUsed "standard" }}selected{{end}}>Standard</option>
+                        <option value="thinkertoy" {{if eq .StyleUsed "thinkertoy" }}selected{{end}}>Thinkertoy</option>
+                        <option value="shadow" {{if eq .StyleUsed "shadow" }}selected{{end}}>Shadow</option>
+                        <option value="hy" {{if eq .StyleUsed "hy" }}selected{{end}}>hy</option>
+                    </select>
+                    <button type="submit">Generate</button>
+                </div>
             </form>
 
             <div class="result-section">
-                <h2>Your ASCII Art:</h2>
+                <h2>Generated ASCII Art</h2>
                 <pre id="asciiResult">{{if .Error}}{{.Error}}{{else}}{{.AsciiArt}}{{end}}</pre>
                 {{if .AsciiArt}}
-                    <div style="margin-top: 10px; text-align: center; float: right">
-                        <form action="/download" method="post">
-                            <textarea name="asciiArt" hidden>{{.AsciiArt}}</textarea>
-                            <select name="fileType">
-                                <option value="txt" selected>.txt</option>
-                                <option value="doc">.doc</option>
-                                <option value="html">.html</option>
-                            </select>
-                            <button type="submit">Download</button>
-                        </form>
-                    </div>
-                    <br/>
+                <div style="margin-top: 10px; text-align: center; float: right">
+                    <form action="/download" method="post">
+                        <textarea name="asciiArt" hidden>{{.AsciiArt}}</textarea>
+                        <select name="fileType">
+                            <option value="txt" selected>.txt</option>
+                            <option value="doc">.doc</option>
+                            <option value="html">.html</option>
+                        </select>
+                        <button type="submit">Download</button>
+                    </form>
+                </div>
+                <br />
                 {{end}}
             </div>
         </div>
@@ -45,4 +51,5 @@
 
     <!-- <footer class="footer">&copy; All Rights Reserved to Anass Lazaar</footer> -->
 </body>
+
 </html>

@@ -7,9 +7,10 @@
 body {
   min-height: 100vh;
   background-color: #3d3b40;
-  color: #f8edff;
-  font-family: Arial, sans-serif;
+  color: #888;
   padding: 2rem;
+  font-family: 'Lato', sans-serif;
+  margin: 0;
 }
 
 .container {
@@ -54,12 +55,17 @@ textarea {
 
 select,
 button {
+  /* width: 30px; */
+  text-align: center;
   padding: 0.5rem;
   border: 2px solid #525ceb;
   border-radius: 0.25rem;
   background-color: #3d3b40;
   color: #f8edff;
   cursor: pointer;
+  width: 200px;
+  height: 50px;
+
 }
 
 button {
@@ -122,6 +128,12 @@ button:hover {
   transition: background-color 0.2s;
 }
 
+.submitButtons {
+  display: flex;
+  justify-content: end; /* Centers horizontally */
+  gap: 10px;
+}
+
 .button:hover {
   background-color: #4450f8;
 }
@@ -137,5 +149,44 @@ button:hover {
 
   textarea {
     width: auto;
+  }
+}
+
+/* Error page */
+
+p {
+  margin-bottom : 60px;
+  font-size: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+#main {
+  display: table;
+  width: 100%;
+  text-align: center;
+}
+
+.fof h1 {
+  font-size: 50px;
+  display: inline-block;
+  padding-right: 12px;
+  animation: type .5s alternate infinite;
+}
+
+img {
+  margin-top: 160px;
+}
+
+@keyframes type {
+  from {
+      box-shadow: inset -3px 0px 0px #888;
+  }
+
+  to {
+      box-shadow: inset -3px 0px 0px transparent;
   }
 }
