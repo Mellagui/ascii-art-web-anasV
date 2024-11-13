@@ -63,8 +63,8 @@ button {
   background-color: #3d3b40;
   color: #f8edff;
   cursor: pointer;
-  width: 200px;
-  height: 50px;
+  width: 150px;
+  height: 40px;
 
 }
 
@@ -128,7 +128,7 @@ button:hover {
   transition: background-color 0.2s;
 }
 
-.submitButtons {
+.submit-buttons {
   display: flex;
   justify-content: end; /* Centers horizontally */
   gap: 10px;
@@ -136,20 +136,6 @@ button:hover {
 
 .button:hover {
   background-color: #4450f8;
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 80%;
-  }
-
-  .input-group {
-    flex-wrap: nowrap;
-  }
-
-  textarea {
-    width: auto;
-  }
 }
 
 /* Error page */
@@ -170,11 +156,31 @@ a {
   text-align: center;
 }
 
-.fof h1 {
+.animationTyping h1 {
   font-size: 50px;
   display: inline-block;
   padding-right: 12px;
   animation: type .5s alternate infinite;
+}
+
+h1 {
+  width: auto;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 50px;
+  /* display: inline-bock; */
+  padding-right: 12px;
+  animation: type .5s alternate infinite;
+  margin-left: 0px;
+}
+
+.animated-head {
+  display: flex;
+  justify-content: center;
+  /* Centers horizontally */
+  align-items: center;
+  /* Centers vertically */
 }
 
 img {
@@ -188,5 +194,19 @@ img {
 
   to {
       box-shadow: inset -3px 0px 0px transparent;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 80%;
+  }
+
+  .input-group {
+    flex-wrap: nowrap;
+  }
+
+  textarea {
+    width: auto;
   }
 }

@@ -6,25 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{.Title}}</title>
     <link rel="stylesheet" href="/static/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--Icons styling-->
 </head>
 
 <body>
     <div class="container">
-        <h1>{{.Title}}</h1>
+        <header class="animated-head">
+            <h1>{{.Title}}</h1>
+        </header>
 
         <div class="generator-box">
             <form action="/ascii-art" method="post">
                 <div class="input-group">
                     <textarea name="text" placeholder="Enter your text here" maxlength="2000">{{.InputText}}</textarea>
                 </div>
-                <div class="submitButtons">
-                <select name="style">
+                <div class="submit-buttons">
+                    <select name="style">
                         <option value="standard" {{if eq .StyleUsed "standard" }}selected{{end}}>Standard</option>
                         <option value="thinkertoy" {{if eq .StyleUsed "thinkertoy" }}selected{{end}}>Thinkertoy</option>
                         <option value="shadow" {{if eq .StyleUsed "shadow" }}selected{{end}}>Shadow</option>
                         <option value="hy" {{if eq .StyleUsed "hy" }}selected{{end}}>hy</option>
                     </select>
-                    <button type="submit">Generate</button>
+                    <button type="submit"><i class="fa fa-cogs"></i> Generate</button>
                 </div>
             </form>
 
@@ -32,15 +36,17 @@
                 <h2>Generated ASCII Art</h2>
                 <pre id="asciiResult">{{if .Error}}{{.Error}}{{else}}{{.AsciiArt}}{{end}}</pre>
                 {{if .AsciiArt}}
-                <div style="margin-top: 10px; text-align: center; float: right">
+                <div style="margin-top: 15px">
                     <form action="/download" method="post">
-                        <textarea name="asciiArt" hidden>{{.AsciiArt}}</textarea>
-                        <select name="fileType">
-                            <option value="txt" selected>.txt</option>
-                            <option value="doc">.doc</option>
-                            <option value="html">.html</option>
-                        </select>
-                        <button type="submit">Download</button>
+                        <div class="submit-buttons">
+                            <textarea name="asciiArt" hidden>{{.AsciiArt}}</textarea>
+                            <select name="fileType">
+                                <option value="txt" selected>.txt</option>
+                                <option value="doc">.doc</option>
+                                <option value="html">.html</option>
+                            </select>
+                            <button type="submit"><i class="fa fa-download"></i> Download</button>
+                        </div>
                     </form>
                 </div>
                 <br />
