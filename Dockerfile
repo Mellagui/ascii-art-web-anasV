@@ -1,6 +1,13 @@
 # Stage 1: Build the Go backend
 FROM debian:bullseye-slim AS builder
 
+# Adding metadata
+LABEL maintainer="Zone01 talents(myacoubi, anlazaar, amellagu)"
+LABEL version="1.0.0"
+LABEL description="An image to run the ASCII Art Web application."
+LABEL website="http://localhost/8080"
+LABEL build-date="Decembre 2024"
+
 # Install Go
 RUN apt-get update && apt-get install -y golang-go
 
@@ -21,16 +28,20 @@ RUN cd backend && go build -o /app/ascii-art-web main.go
 # Stage 2: Use Debian Bullseye (to match GLIBC versions)
 FROM debian:bullseye-slim
 
-WORKDIR /app
+WORKDIR /app/backend
 
 # Copy the built Go binary from the builder stage
-COPY --from=builder /app/ascii-art-web /app/ascii-art-web
+COPY --from=builder /app/ascii-art-web ./ascii-art-web
 
 # Copy the banners directory
-COPY ascii-art/backend/banners /backend/banners
+COPY backend/banners ./banners
+COPY backend/utils ./utils
+
+# Copy other required files
+COPY templates ../templates
 
 # Copy the frontend files
-COPY frontend /app/frontend
+COPY static ../static
 
 # Expose the port for the Go server
 EXPOSE 8080
