@@ -13,14 +13,8 @@ RUN apt-get update && apt-get install -y golang-go
 
 WORKDIR /app
 
-# Copy go.mod and go.sum files from the backend directory
-COPY backend/go.mod ./backend/
-
-# Download dependencies
-RUN cd backend && go mod download
-
 # Copy the rest of the backend source code
-COPY backend ./backend
+COPY backend backend
 
 # Build the Go binary
 RUN cd backend && go build -o /app/ascii-art-web main.go
