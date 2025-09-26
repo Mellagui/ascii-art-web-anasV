@@ -20,5 +20,5 @@
 
 # Go files should use LF
 *.go text eol=lf
-go.mod text eol=lf
+go.mod text eol=lf 
 go.sum text eol=lf
